@@ -115,6 +115,9 @@ const HMSI = {
   walk: { torso: -6, bob: 1.6, arms: 18 },
 };
 
+CRIPTA.rig = 'cripta';
+Rig.define('cripta', CRIPTA_RIG, 'assets/cripta/');
+
 const CHARACTERS = [CRIPTA, HMSI];
 
 // ---------- geometry ----------
@@ -253,6 +256,8 @@ CRIPTA.poses = {
     const b = Math.sin(t * 0.1);
     return P({ pockets: 1, torso: -9 + b, headX: -3, headY: 1, hipY: 26, armF: [12, 4], armB: [6, 6], legF: [14, -6], legB: [-16, 6] });
   },
+  // a shallower crouch than the puppet's, so the cut-out legs stay readable
+  crouch: () => P({ pockets: 1, hipY: 17, torso: 10, headY: -1, legF: [42, -46], legB: [-36, 40], armF: [16, 6], armB: [10, 8] }),
   special: t => {
     const p = POSES.special(t);
     if (t < 8) return mix(POCKETS, p, t / 8);
@@ -538,6 +543,7 @@ function drawPuppet(ctx, ch, g, ox, oy, facing, tint) {
 }
 
 function drawFighter(ctx, ch, pose, x, y, facing, flash) {
+  if (Rig.has(ch) && Rig.draw(ctx, ch, pose, x, y, facing, flash)) return;
   const g = solvePose(pose);
   for (const [dx, dy] of [[-1, 0], [1, 0], [0, -1], [0, 1]]) drawPuppet(ctx, ch, g, x + dx, y + dy, facing, OUTLINE);
   drawPuppet(ctx, ch, g, x, y, facing, flash || null);
