@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>LON3R Staff Fighting</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="screen">
+  <canvas id="game" width="384" height="216"></canvas>
+  <div id="fx"></div>
+</div>
+<div id="touch" hidden>
+  <div class="pad"><span class="l">&#9664;</span><span class="r">&#9654;</span><span class="u">&#9650;</span><span class="d">&#9660;</span></div>
+  <div class="btn punch" data-key="KeyF">PUNCH</div>
+  <div class="btn kick" data-key="KeyG">KICK</div>
+  <div class="btn sp" data-key="KeyH">SP</div>
+  <div class="btn menu" data-key="Escape">MENU</div>
+</div>
+<script src="js/audio.js"></script>
+<script src="js/input.js"></script>
+<script src="js/characters.js"></script>
+<script src="js/fighter.js"></script>
+<script src="js/stage.js"></script>
+<script src="js/scenes.js"></script>
+<script src="js/touch.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
