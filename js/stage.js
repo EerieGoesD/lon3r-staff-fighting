@@ -118,13 +118,6 @@ const Stage = (() => {
 
     palm(c, 36, 64, 64, 12);
     palm(c, 350, 322, 68, -12);
-
-    // neon sign
-    ctx.font = '8px "Press Start 2P"';
-    c.font = ctx.font;
-    c.textAlign = 'center'; c.textBaseline = 'top';
-    c.fillStyle = '#ff2fb0'; c.fillText('LON3R', 297, 99);
-    c.fillStyle = '#ffd6f0'; c.fillText('LON3R', 296, 98);
   }
 
   function draw(ctx, t) {

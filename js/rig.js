@@ -35,6 +35,13 @@ const Rig = (() => {
     return c;
   }
 
+  // darker copy of a colour, for anything on the far side of the body
+  function shade(hex) {
+    const n = parseInt(hex.slice(1), 16);
+    const f = c => Math.round(c * 0.55);
+    return 'rgb(' + f(n >> 16 & 255) + ',' + f(n >> 8 & 255) + ',' + f(n & 255) + ')';
+  }
+
   function rot(v, deg) {
     const a = deg * Math.PI / 180, c = Math.cos(a), s = Math.sin(a);
     return [v[0] * c - v[1] * s, v[0] * s + v[1] * c];
@@ -78,7 +85,17 @@ const Rig = (() => {
       const [sx, sy] = rot(J.hipToShoulder, -pose.torso);
       put('armU', hip[0] + sx, hip[1] + sy, up, k);
       const d = rot(J.shoulderToElbow, up);
-      put('armF', hip[0] + sx + d[0], hip[1] + sy + d[1], R.armF - a[1] + up - R.armU, k);
+      const fore = R.armF - a[1] + up - R.armU;
+      const ex = hip[0] + sx + d[0], ey = hip[1] + sy + d[1];
+      put('armF', ex, ey, fore, k);
+      // the hand in the source sprite is a handful of dark pixels inside his pocket,
+      // so the fist is drawn instead, at the far end of the forearm
+      const h = rot(J.elbowToHand, fore);
+      const fx = Math.round(ex + h[0]), fy = Math.round(ey + h[1]);
+      ctx.fillStyle = k === 'white' ? '#ffffff' : OUTLINE;
+      ctx.fillRect(fx - 3, fy - 3, 6, 6);
+      ctx.fillStyle = k === 'white' ? '#ffffff' : k === 'dark' ? shade(ch.skin) : ch.skin;
+      ctx.fillRect(fx - 2, fy - 2, 4, 4);
     };
 
     // only the near arm is drawn: in this side view the far arm is hidden by the body,

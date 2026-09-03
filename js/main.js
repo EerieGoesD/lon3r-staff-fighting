@@ -100,6 +100,8 @@
     Sound.load('eerie', 'assets/eerie.wav');
     Music.load('menu', 'assets/menu.mp3', 0.5);
     Music.load('fight', 'assets/fight.mp3', 0.45);
+    // the opening scene is set directly, so run its enter() by hand to start its music
+    if (SCENES[G.scene].enter) SCENES[G.scene].enter();
     requestAnimationFrame(t => { last = t; loop(t); });
   }
 
